@@ -10,7 +10,7 @@
 # include "fastflow.h"
 
 FastFlow::FastFlow (std::string fname)
-    : _have_video(false);
+    : _have_video(false)
 {
 
     _vid.open(fname);
@@ -25,5 +25,26 @@ FastFlow::FastFlow (std::string fname)
     }
 
     _have_video = true;
+
+}
+
+void
+FastFlow::computeFlow (const unsigned int sframe, const unsigned int eframe)
+{
+
+    unsigned int fi=0;
+    bool process = false;
+    for (;;)
+    {
+        cv::Mat frame0;
+
+        if (!_vid.read(frame0))
+            break;
+
+        fi++;
+
+    }
+
+    std::cout << "nframes = " << fi << " " << process << std::endl;
 
 }

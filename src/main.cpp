@@ -21,6 +21,7 @@ main (int argc, char *argv[])
     }
 
     FastFlow f(argv[1]);
+    f.computeFlow();
 
     return 0;
 }

@@ -20,6 +20,9 @@ public:
     FastFlow (std::string fname);
 
 
+    void computeFlow (const unsigned int sframe=0, const unsigned int eframe = -1);
+
+
 private:
     cv::VideoCapture _vid;
     bool _have_video;
