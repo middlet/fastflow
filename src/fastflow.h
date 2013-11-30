@@ -8,5 +8,15 @@
 # ifndef FFLOW_FASTFLOW_H
 # define FFLOW_FASTFLOW_H
 
+class FastFlow
+{
+public:
+    FastFlow ();
+
+
+private:
+
+
+}; // class FastFlow
 
 # endif // FFLOW_FASTFLOW_H
