@@ -8,13 +8,21 @@
 # ifndef FFLOW_FASTFLOW_H
 # define FFLOW_FASTFLOW_H
 
+// c++ includes
+# include <string>
+
+// opencv includes
+# include "opencv2/opencv.hpp"
+
 class FastFlow
 {
 public:
-    FastFlow ();
+    FastFlow (std::string fname);
 
 
 private:
+    cv::VideoCapture _vid;
+    bool _have_video;
 
 
 }; // class FastFlow
