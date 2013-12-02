@@ -10,6 +10,11 @@
 
 // c++ includes
 # include <string>
+# include <fstream>
+# include <iomanip>
+
+// boost includes
+# include <boost/filesystem.hpp>
 
 // opencv includes
 # include "opencv2/opencv.hpp"
@@ -20,7 +25,11 @@ public:
     FastFlow (std::string fname);
 
 
-    void computeFlow (const unsigned int sframe=0, const unsigned int eframe = -1);
+    void computeFlow (const uint sframe=0, const uint eframe = -1);
+
+    void processFrame(cv::Mat f0, cv::Mat f1, std::vector<cv::Point2f> *points);
+
+    void outputFlow(uint fi, std::vector<cv::Point2f> *points);
 
 
 private:
