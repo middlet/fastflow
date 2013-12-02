@@ -47,7 +47,7 @@ FastFlow::computeFlow (const uint sframe, const uint eframe)
                     break;
             }
             else
-                frame0 = frame1;
+                frame0 = frame1.clone();
             if (!_vid.read(frame1))
                 break;
 
@@ -100,8 +100,11 @@ FastFlow::outputFlow(uint fi, std::vector<cv::Point2f> *points)
         return;
     if (!boost::filesystem::is_directory("./out"))
         boost::filesystem::create_directories("./out");
-    std::ostringstream fname;
+    std::ostringstream fname, oiname;
     fname << "./out/flow_" << std::setw(9) << std::setfill('0') << fi << ".flo";
+    oiname << "./out/flow_" << std::setw(9) << std::setfill('0') << fi << ".png";
+
+    cv::Mat im(480, 640, CV_8UC3, cv::Scalar(0,0,255));
     std::ofstream of;
     of.open(fname.str().c_str());
     for (uint pi=0; pi<points[0].size(); ++pi)
@@ -109,6 +112,8 @@ FastFlow::outputFlow(uint fi, std::vector<cv::Point2f> *points)
         float x0 = points[0][pi].x, y0 = points[0][pi].y;
         float x1 = points[1][pi].x, y1 = points[1][pi].y;
         of << x0 << " " << y0 << " " << (x1-x0) << " " << (y1-y0) << std::endl;
+        line(im, cv::Point(x0,y0), cv::Point(x1,y1), cv::Scalar(0,255,0), 1, 8);
     }
+    imwrite(oiname.str().c_str(), im);
     of.close();
 }
