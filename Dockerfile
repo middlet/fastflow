@@ -4,7 +4,7 @@
 #	docker build -t <name> .
 #
 # running with similar mounting to vagrant
-#	docker run -v `pwd`:/vagrant -t name -i /bin/bash
+#	docker run -v `pwd`:/vagrant -t <name> -i /bin/bash
 
 from		ubuntu:12.04
 maintainer	middlet@gmail.com
