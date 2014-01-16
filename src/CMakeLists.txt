@@ -14,5 +14,9 @@ include_directories(. ${COMMON_INCLUDES} )
 
 # include opencv
 
-add_executable(fflow fastflow.cpp main.cpp)
+add_executable(fflow fastflow.cpp flowpath.cpp main.cpp)
 target_link_libraries( fflow ${OpenCV_LIBS} ${Boost_LIBRARIES} )
+
+# build static library for testing
+add_library(flowpath STATIC "flowpath.cpp")
+
