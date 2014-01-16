@@ -17,6 +17,11 @@ public:
 	FlowPath ();
 	~FlowPath ();
 
+	void addPoints(const std::vector<cv::Point2f> p1, const std::vector<cv::Point2f> p2);
+
+	const std::vector<std::vector<cv::Point2f> > tracks () const;
+	const uint numTracks () const;
+
 private:
 	std::vector<std::vector<cv::Point2f> > _tracks;
 
