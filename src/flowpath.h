@@ -18,12 +18,14 @@ public:
 	~FlowPath ();
 
 	void addPoints(const std::vector<cv::Point2f> p1, const std::vector<cv::Point2f> p2);
+	void addInitialPoints(const std::vector<cv::Point2f> p);
 
 	const std::vector<std::vector<cv::Point2f> > tracks () const;
 	const uint numTracks () const;
 
 private:
 	std::vector<std::vector<cv::Point2f> > _tracks;
+	bool _havetrack;
 
 }; // class FlowPath
 
