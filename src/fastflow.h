@@ -19,23 +19,25 @@
 // opencv includes
 # include "opencv2/opencv.hpp"
 
+// my includes
+# include "flowpath.h"
+
 class FastFlow
 {
 public:
     FastFlow (std::string fname);
 
-
     void computeFlow (const uint sframe=0, const uint eframe = -1);
 
-    void processFrame(cv::Mat f0, cv::Mat f1, std::vector<cv::Point2f> *points);
+    void processFrame (cv::Mat f0, cv::Mat f1, std::vector<cv::Point2f> *points);
 
-    void outputFlow(uint fi, std::vector<cv::Point2f> *points);
-
+    void outputFlow (uint fi, std::vector<cv::Point2f> *points);
+    void outputTracks ();
 
 private:
     cv::VideoCapture _vid;
     bool _have_video;
-
+    FlowPath _tracks;
 
 }; // class FastFlow
 

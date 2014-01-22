@@ -37,23 +37,25 @@ FastFlow::computeFlow (const uint sframe, const uint eframe)
     cv::Mat frame0, frame1;
     while (true)
     {
-
+        if (!_vid.read(frame0))
+            break;
         if (fi>=sframe && fi<eframe)
         {
             std::cout << fi << std::endl;
-            if (fi==sframe)
-            {
-                if (!_vid.read(frame0))
-                    break;
-            }
-            else
+            if (fi!=sframe)
                 frame0 = frame1.clone();
+
+            std::ostringstream os;
+            os << "./out/image_" << std::setw(9) << std::setfill('0') << fi << ".png";
+            imwrite(os.str().c_str(), frame0);
+            
             if (!_vid.read(frame1))
                 break;
 
             float start = cv::getTickCount();
             std::vector<cv::Point2f> points[2];
             processFrame(frame0, frame1, points);
+            _tracks.addPoints(points[0], points[1]);
             outputFlow(fi, points);
             std::cout << "\t" << (cv::getTickCount() - start) / cv::getTickFrequency() << std::endl;
 
@@ -64,6 +66,8 @@ FastFlow::computeFlow (const uint sframe, const uint eframe)
         fi++;
 
     }
+
+    outputTracks();
 
     std::cout << "nframes = " << (fi-sframe) << " " << process << std::endl;
 
@@ -81,15 +85,14 @@ FastFlow::processFrame(cv::Mat f0, cv::Mat f1, std::vector<cv::Point2f> *points)
     cv::cvtColor(f0, f0g, CV_BGR2GRAY);
     cv::cvtColor(f1, f1g, CV_BGR2GRAY);
     // compute flow
-    std::vector<cv::KeyPoint> kpoints[2];
-    feat->detect(f0g, kpoints[0]);
-    //std::vector<cv::Point2f> points[2];
-    for (uint ki=0; ki<kpoints[0].size(); ++ki)
-            points[0].push_back(kpoints[0][ki].pt);
+    std::vector<cv::KeyPoint> kpoints;
+    feat->detect(f0g, kpoints);
+    for (uint ki=0; ki<kpoints.size(); ++ki)
+            points[0].push_back(kpoints[ki].pt);
     std::vector<uchar> status;
     std::vector<float> error;
-    cv::calcOpticalFlowPyrLK(f0g, f1g, points[0], points[1], status, error, winSize, 3, termcrit, 0, 0.001);
-
+    if (kpoints.size()>0)
+        cv::calcOpticalFlowPyrLK(f0g, f1g, points[0], points[1], status, error, winSize, 3, termcrit, 0, 0.001);
 }
 
 void
@@ -116,4 +119,23 @@ FastFlow::outputFlow(uint fi, std::vector<cv::Point2f> *points)
     }
     imwrite(oiname.str().c_str(), im);
     of.close();
+}
+
+void
+FastFlow::outputTracks ()
+{
+    std::vector<std::vector<cv::Point2f> > tracks = _tracks.tracks();
+
+    cv::Mat im(480, 640, CV_8UC3, cv::Scalar(0,0,255));
+
+    for (uint ti=0; ti<tracks.size(); ++ti)
+    {
+        for (uint pi=1; pi<tracks[ti].size(); ++pi)
+        {
+            line(im, tracks[ti][pi-1], tracks[ti][pi], cv::Scalar(0,255,0), 1, 8);
+        }
+    }
+
+    imwrite("./out/tracks.png", im);
+
 }
