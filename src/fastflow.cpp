@@ -138,4 +138,13 @@ FastFlow::outputTracks ()
 
     imwrite("./out/tracks.png", im);
 
+    //for (uint fi=0; fi<100; ++fi)
+    //{
+    //    cv::Mat im(480, 640, CV_8UC3, cv::Scalar(255,255,255));
+    //    rectangle(im, cv::Point2f(100+fi*2, 100), cv::Point2f(150+fi*2, 150), cv::Scalar(0,255,0), -1, 8);
+    //    std::ostringstream os;
+    //    os << "./ims/im_" << std::setw(4) << std::setfill('0') << fi << ".png";
+    //    imwrite(os.str().c_str(), im);       
+    //}
+
 }

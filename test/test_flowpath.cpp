@@ -1,10 +1,9 @@
 /*!
-	\file flowpath_test.cpp
+	\file test_flowpath.cpp
 
 	test file for the flowpath code
 
 */
-
 
 # include "../src/flowpath.h"
 
