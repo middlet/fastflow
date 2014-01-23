@@ -19,4 +19,5 @@ target_link_libraries( fflow ${OpenCV_LIBS} ${Boost_LIBRARIES} )
 
 # build static library for testing
 add_library(flowpath STATIC "flowpath.cpp")
+add_library(fastflow STATIC "fastflow.cpp")
 

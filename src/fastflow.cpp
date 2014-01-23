@@ -9,6 +9,13 @@
 // internal includes
 # include "fastflow.h"
 
+FastFlow::FastFlow ()
+    : _have_video(false)
+{
+
+}
+
+
 FastFlow::FastFlow (std::string fname)
     : _have_video(false)
 {
@@ -26,6 +33,11 @@ FastFlow::FastFlow (std::string fname)
 
     _have_video = true;
 
+}
+
+FastFlow::~FastFlow ()
+{
+    
 }
 
 void

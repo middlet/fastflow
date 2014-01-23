@@ -9,4 +9,17 @@
 
 # include "gtest/gtest.h"
 
+class FastFlowTest : public ::testing::Test 
+{
+protected:
+	FastFlow _ff;
 
+}; // class FastFlowTest
+
+/*
+	test for processing a frame
+*/
+TEST_F(FastFlowTest, FrameProcessOK)
+{
+	
+}

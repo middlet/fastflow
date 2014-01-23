@@ -25,7 +25,9 @@
 class FastFlow
 {
 public:
+	FastFlow ();
     FastFlow (std::string fname);
+	~FastFlow ();    
 
     void computeFlow (const uint sframe=0, const uint eframe = -1);
 
