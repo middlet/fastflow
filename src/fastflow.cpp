@@ -22,8 +22,8 @@ FastFlow::FastFlow (std::string fname)
 
     _vid.open(fname);
 
-    cv::Mat frame;
-    _vid >> frame;
+    //cv::Mat frame;
+    //_vid >> frame;
 
     if (!_vid.isOpened())
     {
@@ -37,6 +37,21 @@ FastFlow::FastFlow (std::string fname)
 
 FastFlow::~FastFlow ()
 {
+
+}
+
+void 
+FastFlow::setVideoSource (std::string fname)
+{
+    _vid.open(fname);
+
+    if (!_vid.isOpened())
+    {
+        std::cerr << "problem with " << fname << std::endl;
+        return;
+    }
+
+    _have_video = true;
 
 }
 
@@ -54,6 +69,7 @@ FastFlow::computeFlow (const uint sframe, const uint eframe)
         if (fi>=sframe && fi<eframe)
         {
             std::cout << fi << std::endl;
+
             if (fi!=sframe)
                 frame0 = frame1.clone();
 
@@ -149,4 +165,10 @@ FastFlow::outputTracks ()
     }
 
     imwrite("./out/tracks.png", im);
+}
+
+const std::vector<std::vector<cv::Point2f> >
+FastFlow::tracks () const
+{
+    return _tracks.tracks();
 }

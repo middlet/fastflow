@@ -27,7 +27,9 @@ class FastFlow
 public:
 	FastFlow ();
     FastFlow (std::string fname);
-	~FastFlow ();    
+	~FastFlow ();
+
+	void setVideoSource (std::string fname);
 
     void computeFlow (const uint sframe=0, const uint eframe = -1);
 
@@ -35,6 +37,8 @@ public:
 
     void outputFlow (uint fi, std::vector<cv::Point2f> *points);
     void outputTracks ();
+
+    const std::vector<std::vector<cv::Point2f> > tracks () const;
 
 private:
     cv::VideoCapture _vid;
