@@ -8,7 +8,7 @@
 # include "flowpath.h"
 
 FlowPath::FlowPath ()
-	: _havetrack( false )
+	: _havetrack( false ), _tol(1.0)
 {
 
 }
@@ -35,7 +35,7 @@ FlowPath::addPoints(std::vector<cv::Point2f> p1, std::vector<cv::Point2f> p2)
 		for (uint ti=0; ti<_tracks.size(); ++ti)
 		{
 			cv::Point2f pp2 = _tracks[ti].back();
-			if (pp1==pp2)
+			if (fabs(pp1.x-pp2.x)<=_tol && fabs(pp1.y-pp2.y)<=_tol)
 			{
 				_tracks[ti].push_back(p2[pi]);
 				found = true;

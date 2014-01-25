@@ -26,6 +26,7 @@ public:
 private:
 	std::vector<std::vector<cv::Point2f> > _tracks;
 	bool _havetrack;
+	float _tol;
 
 }; // class FlowPath
 

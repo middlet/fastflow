@@ -64,32 +64,35 @@ FastFlow::computeFlow (const uint sframe, const uint eframe)
     cv::Mat frame0, frame1;
     while (true)
     {
-        if (!_vid.read(frame0))
+        if (!_vid.read(frame1))
             break;
-        if (fi>=sframe && fi<eframe)
+        if (fi>sframe && fi<eframe)
         {
             std::cout << fi << std::endl;
 
-            if (fi!=sframe)
-                frame0 = frame1.clone();
+            //if (fi!=sframe)
+            //    frame0 = frame1.clone();
 
             std::ostringstream os;
             os << "./out/image_" << std::setw(9) << std::setfill('0') << fi << ".png";
-            imwrite(os.str().c_str(), frame0);
+            imwrite(os.str().c_str(), frame1);
             
-            if (!_vid.read(frame1))
-                break;
+            //if (!_vid.read(frame1))
+            //    break;
 
             float start = cv::getTickCount();
             std::vector<cv::Point2f> points[2];
             processFrame(frame0, frame1, points);
             _tracks.addPoints(points[0], points[1]);
+
             outputFlow(fi, points);
             std::cout << "\t" << (cv::getTickCount() - start) / cv::getTickFrequency() << std::endl;
 
             if (fi==eframe-1)
                 break;
         }
+
+        frame0 = frame1.clone();
 
         fi++;
 

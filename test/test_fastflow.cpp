@@ -26,9 +26,9 @@ protected:
 	void createVideo (std::string fname)
 	{
 		cv::Mat im0 = createImage(100, 100);
-		cv::Mat im1 = createImage(105, 105);
+		cv::Mat im1 = createImage(105, 100);
 		cv::Mat im2 = createImage(110, 100);
-		cv::Mat im3 = createImage(115, 105);
+		cv::Mat im3 = createImage(115, 100);
 
 		cv::VideoWriter vid;
 		vid.open(fname, CV_FOURCC('M', 'J', 'P', 'G'), 3, cv::Size(640, 480), true);
@@ -60,7 +60,7 @@ TEST_F(FastFlowTest, FrameProcessOK)
 
 
 /*
-	a sequence of 3 frames  
+	a sequence of frames so we can check the flow
 */
 TEST_F(FastFlowTest, FrameSequenceOK)
 {
@@ -70,5 +70,13 @@ TEST_F(FastFlowTest, FrameSequenceOK)
 	_ff.setVideoSource(fname);
 	_ff.computeFlow(0,4);
 
+	std::vector<std::vector<cv::Point2f> > tracks = _ff.tracks();
+
+	EXPECT_EQ(4, tracks.size());
+	EXPECT_EQ(4, tracks[0].size());
+	EXPECT_LT(tracks[0][3].x-115, 2);
+	EXPECT_LT(tracks[1][2].y-100, 2);
+	EXPECT_LT(tracks[2][1].x-155, 2);
+	EXPECT_LT(tracks[3][0].x-150, 2);
 
 }
